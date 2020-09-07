@@ -1,4 +1,4 @@
 # memory
-jeu memory en Angular
+jeu memory
 
 https://bnjee.github.io/memory/
