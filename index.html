@@ -4,6 +4,38 @@
 <head>
     <meta charset="UTF-8">
     <title>Memory</title>
+</head>
+
+<body>
+    <div class="container-fluid text-center">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <table align="center">
+            <tr>
+                <td id="nombre">
+                    <form onSubmit="return false;">
+                        <label for="number" class="h4">Choisir le nombre de colonne du plateau : </label>
+                        <input type="number" id="nbColonne" type="text" placeholder="Ex : 2, 4, 6 etc..." onkeyup="manage(this)">
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td id="contenu">
+                    <button id="btDemarrer" onclick="demarrer();" class="btn btn-outline-primary" disabled>Démarrer partie</button>
+                </td>
+                <td id="compteurDeCoups">
+                    <p></p>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <hr>
+    <footer style="text-align: center;">
+        <p>&copy;Bnjee</p>
+    </footer>
     <script>
         var click = 0;
         var saveTab = 0;
@@ -47,13 +79,34 @@
                 window.location.reload();
             }
         }
-        function demarrer() {
-            var nbColonnes = document.getElementById("nbColonne").value;
-            if (nbColonnes % 2 != 0) {
-                alert("le nombre de colonne du plateau doit etre pair !");
-                window.location.reload();
+        function manage(nbColonne) {
+            var bt = document.getElementById('btDemarrer');
+            if (nbColonne.value != '') {
+                bt.disabled = false;
             }
             else {
+                bt.disabled = true;
+            }
+        }
+        var btEnter = document.getElementById("nbColonne");
+        btEnter.addEventListener("keyup", function(event) {
+            if (event.keyCode === 13) {
+                event.preventDefault ();
+                document.getElementById("btDemarrer").click();
+            }
+        }); 
+        function demarrer() {
+            var nbColonnes = document.getElementById("nbColonne").value;
+            if (nbColonnes < 0) {
+                alert("Nombres négatifs interdits :(");
+                window.location.reload();
+            } else if (nbColonnes % 2 != 0) {
+                alert("le nombre de colonne du plateau doit etre pair !");
+                window.location.reload();
+            } else if (nbColonnes == 0) {
+                alert("Vous ne pouvez pas jouer si vous mettez 0 colonne :D");
+                window.location.reload();
+            } else {
                 var l = nbColonnes * nbColonnes;
                 var plateauHTML = "";
                 var compteur = -1;
@@ -85,38 +138,6 @@
             }
         }
     </script>
-</head>
-
-<body>
-    <div class="container-fluid text-center">
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <table align="center">
-            <tr>
-                <td id="nombre">
-                    <form action="">
-                        <label for="number" class="h4">Choisir le nombre de colonne du plateau : </label>
-                        <input id="nbColonne" type="text" placeholder="Ex : 2, 4, 6 etc...">
-                    </form>
-                </td>
-            </tr>
-            <tr>
-                <td id="contenu">
-                    <button onclick="demarrer();" class="btn btn-outline-primary">Démarrer partie</button>
-                </td>
-                <td id="compteurDeCoups">
-                    <p></p>
-                </td>
-            </tr>
-        </table>
-    </div>
-    <hr>
-    <footer style="text-align: center;">
-        <p>&copy;Bnjee</p>
-    </footer>
 </body>
 
 <style type="text/css">
@@ -9298,6 +9319,18 @@
         .table-bordered td {
             border: 1px solid #ddd !important;
         }
+    }
+
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+    -moz-appearance: textfield;
     }
 
     /*# sourceMappingURL=bootstrap.css.map */
